@@ -9,22 +9,23 @@ module HammerCLIForeman
   module CommonHostUpdateOptions
 
     def self.included(base)
-      base.option "--environment-id", "ENVIRONMENT_ID", " "
-      base.option "--architecture-id", "ARCHITECTURE_ID", " "
-      base.option "--domain-id", "DOMAIN_ID", " "
-      base.option "--puppet-proxy-id", "PUPPET_PROXY_ID", " "
-      base.option "--operatingsystem-id", "OPERATINGSYSTEM_ID", " "
-      base.option "--partition-table-id", "PARTITION_TABLE_ID", " "
-      base.option "--compute-resource-id", "COMPUTE_RESOURCE", " "
+      base.option "--environment-id", "ENVIRONMENT_ID", " ", :group => _("Associations"), :interactive => true
+      base.option "--architecture-id", "ARCHITECTURE_ID", " ", :group => _("Associations"), :interactive => true
+      base.option "--domain-id", "DOMAIN_ID", " ", :group => _("Associations"), :interactive => true
+      base.option "--puppet-proxy-id", "PUPPET_PROXY_ID", " ", :group => _("Associations"), :interactive => true
+      base.option "--operatingsystem-id", "OPERATINGSYSTEM_ID", " ", :group => _("Associations"), :interactive => true
+      base.option "--partition-table-id", "PARTITION_TABLE_ID", " ", :group => _("Associations"), :interactive => true
+      base.option "--compute-resource-id", "COMPUTE_RESOURCE", " ", :group => _("Associations"), :interactive => true
       base.option "--puppetclass-ids", "PUPPETCLASS_IDS", " ",
-        :format => HammerCLI::Options::Normalizers::List.new
-      base.option "--root-password", "ROOT_PW", " "
+        :format => HammerCLI::Options::Normalizers::List.new, :group => _("Associations"), :interactive => true
+      base.option "--root-password", "ROOT_PW", " ", :interactive => true
       base.option "--ask-root-password", "ASK_ROOT_PW", " ",
         :format => HammerCLI::Options::Normalizers::Bool.new
 
 
       bme_options = {}
       bme_options[:default] = 'true' if base.action.to_sym == :create
+      bme_options[:interactive] = true
 
       bme_options[:format] = HammerCLI::Options::Normalizers::Bool.new
       base.option "--managed", "MANAGED", " ", bme_options
