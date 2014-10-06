@@ -35,15 +35,15 @@ module HammerCLIForeman
       base.option "--enabled", "ENABLED", " ",  bme_options
 
       base.option "--parameters", "PARAMS", _("Host parameters."),
-        :format => HammerCLI::Options::Normalizers::KeyValueList.new
+        :format => HammerCLI::Options::Normalizers::KeyValueList.new, :interactive => true
       base.option "--compute-attributes", "COMPUTE_ATTRS", _("Compute resource attributes."),
-        :format => HammerCLI::Options::Normalizers::KeyValueList.new
+        :format => HammerCLI::Options::Normalizers::KeyValueList.new, :interactive => true
       base.option "--volume", "VOLUME", _("Volume parameters"), :multivalued => true,
-        :format => HammerCLI::Options::Normalizers::KeyValueList.new
+        :format => HammerCLI::Options::Normalizers::KeyValueList.new, :interactive => true
       base.option "--interface", "INTERFACE", _("Interface parameters."), :multivalued => true,
-        :format => HammerCLI::Options::Normalizers::KeyValueList.new
+        :format => HammerCLI::Options::Normalizers::KeyValueList.new, :interactive => true
       base.option "--provision-method", "METHOD", " ",
-        :format => HammerCLI::Options::Normalizers::Enum.new(['build', 'image'])
+        :format => HammerCLI::Options::Normalizers::Enum.new(['build', 'image']), :interactive => true
 
       base.build_options :without => [
             # - temporarily disabled params until they are fixed in API ------------------------
