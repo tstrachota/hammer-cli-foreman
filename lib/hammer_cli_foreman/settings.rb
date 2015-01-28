@@ -14,6 +14,11 @@ module HammerCLIForeman
         field :description, _('Description')
       end
 
+      def extend_data(data)
+        data['value'] = data['value'].to_s
+        data
+      end
+
       build_options
     end
 
