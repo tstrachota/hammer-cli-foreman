@@ -16,6 +16,12 @@ module HammerCLIForeman
       build_options
     end
 
+    class UpdateCommand < HammerCLIForeman::UpdateCommand
+      command_name 'set'
+
+      build_options
+    end
+
     autoload_subcommands
   end
 
