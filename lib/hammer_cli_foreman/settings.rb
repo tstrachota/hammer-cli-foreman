@@ -9,6 +9,7 @@ module HammerCLIForeman
 
     end
 
+    autoload_subcommands
   end
 
 end
