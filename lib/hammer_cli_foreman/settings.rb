@@ -8,6 +8,7 @@ module HammerCLIForeman
     class ListCommand < HammerCLIForeman::ListCommand
 
       output do
+        field :id, _('Id'), Fields::Id
         field :name, _('Name')
         field :value, _('Value')
         field :description, _('Description')
