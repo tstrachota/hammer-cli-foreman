@@ -8,6 +8,8 @@ describe HammerCLIForeman::Output::Formatters::SingleReferenceFormatter do
     {
       :server_id => 1,
       :server_name => 'Server',
+      :url => "URL",
+      :desc => "Description"
     }
   end
 
@@ -27,6 +29,21 @@ describe HammerCLIForeman::Output::Formatters::SingleReferenceFormatter do
       options = {:key => :server, :context => {:show_ids => true}}
       formatter.format(reference, options).must_equal 'Server (id: 1)'
     end
+
+    it "formats details" do
+      options = {:key => :server, :details => :url}
+      formatter.format(reference, options).must_equal 'Server (URL)'
+    end
+
+    it "formats multiple details" do
+      options = {:key => :server, :details => [:url, :desc]}
+      formatter.format(reference, options).must_equal 'Server (URL, Description)'
+    end
+
+    it "formats details and id" do
+      options = {:key => :server, :context => {:show_ids => true}, :details => [:url, :desc]}
+      formatter.format(reference, options).must_equal 'Server (URL, Description, id: 1)'
+    end
   end
 
   context "with string keys" do
@@ -38,6 +55,21 @@ describe HammerCLIForeman::Output::Formatters::SingleReferenceFormatter do
     it "formats id" do
       options = {:key => :server, :context => {:show_ids => true}}
       formatter.format(reference_str_keys, options).must_equal 'Server (id: 1)'
+    end
+
+    it "formats details" do
+      options = {:key => :server, :details => :url}
+      formatter.format(reference_str_keys, options).must_equal 'Server (URL)'
+    end
+
+    it "formats multiple details" do
+      options = {:key => :server, :details => [:url, :desc]}
+      formatter.format(reference_str_keys, options).must_equal 'Server (URL, Description)'
+    end
+
+    it "formats details and id" do
+      options = {:key => :server, :context => {:show_ids => true}, :details => [:url, :desc]}
+      formatter.format(reference_str_keys, options).must_equal 'Server (URL, Description, id: 1)'
     end
   end
 

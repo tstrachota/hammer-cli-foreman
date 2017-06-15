@@ -21,9 +21,18 @@ module HammerCLIForeman::Output
 
         context = field_params[:context] || {}
 
-        out = "#{name}"
-        out += " (id: #{id})" if context[:show_ids] && id
-        out
+        details = field_params[:details] || []
+        details = [details] unless details.is_a? Array
+        values = details.collect do |key|
+          resource[key] || resource[key.to_s]
+        end
+        values << "id: #{id}" if context[:show_ids]
+
+        if values.empty?
+          "#{name}" if name
+        else
+          "#{name} (#{values.join(', ')})" if name && !values.empty?
+        end
       end
 
     end

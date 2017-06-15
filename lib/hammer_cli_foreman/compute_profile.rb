@@ -39,16 +39,16 @@ module HammerCLIForeman
         end
       end
 
-      output ListCommand.output_definition do
 
-        HammerCLIForeman::References.taxonomies(self)
-        HammerCLIForeman::References.timestamps(self)
+      output ListCommand.output_definition do
+        # TODO: mozna pridat pro vyssi verbositu
+        # HammerCLIForeman::References.timestamps(self)
 
         collection :compute_attributes, _("Compute attributes") do
-          field :id, _('Id')
+          field nil, nil, Fields::SingleReference, :key => :compute_resource, :details => :provider_friendly_name
+          field :id, _('Id'), Fields::Id
           field :name, _('Name')
-          field nil, _("Compute Resource"), Fields::SingleReference, :key => :compute_resource
-          field :provider_friendly_name, _('Provider type')
+          # field :provider_friendly_name, _('Provider type')
           # field :vm_attrs, _("VM attributes original")
 
           InfoCommand.vm_attrs_fields(self)
