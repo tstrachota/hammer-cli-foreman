@@ -32,20 +32,19 @@ module HammerCLIForeman
       def self.vm_attrs_fields(dsl)
         dsl.build do
           HammerCLIForeman::ComputeProfile.provider_attributes.each do |k,t|
-            custom_field Fields::Label, :label => _("VM attributes"), :path => ["#{t.name}_vm_attrs".to_sym], :hide_blank => true do
+            label _("VM attributes"), :path => ["#{t.name}_vm_attrs".to_sym], :hide_blank => true do
               t.fields(self)
             end
           end
         end
       end
 
-
       output ListCommand.output_definition do
         # TODO: mozna pridat pro vyssi verbositu
         # HammerCLIForeman::References.timestamps(self)
 
         collection :compute_attributes, _("Compute attributes") do
-          field nil, nil, Fields::SingleReference, :key => :compute_resource, :details => :provider_friendly_name
+          field Fields::SingleReference.new(:key => :compute_resource, :details => :provider_friendly_name)
           field :id, _('Id'), Fields::Id
           field :name, _('Name')
           # field :provider_friendly_name, _('Provider type')
