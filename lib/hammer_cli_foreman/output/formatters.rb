@@ -2,7 +2,7 @@ module HammerCLIForeman::Output
   module Formatters
     class ReferenceFormatter < HammerCLI::Output::Formatters::FieldFormatter
       def tags
-        [:flat]
+        [:flat_values]
       end
 
       # Parameters:
@@ -52,7 +52,7 @@ module HammerCLIForeman::Output
 
     class StructuredReferenceFormatter < HammerCLI::Output::Formatters::FieldFormatter
       def tags
-        [:data]
+        [:structured_values]
       end
 
       # Parameters:
