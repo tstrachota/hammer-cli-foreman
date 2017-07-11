@@ -62,7 +62,7 @@ module HammerCLIForeman
         record['compute_attributes'].each do |attrs|
           provider_name = attrs.fetch('provider_friendly_name', 'default')
           transformer = HammerCLIForeman::ComputeProfile.get_provider(provider_name.downcase)
-          attrs[transformer.name + '_vm_attrs'] = transformer.transform_attributes(attrs['vm_attrs'])
+          attrs[transformer.name + '_vm_attrs'] = transformer.transform_attributes(attrs['attributes'])
           attrs
         end
         record

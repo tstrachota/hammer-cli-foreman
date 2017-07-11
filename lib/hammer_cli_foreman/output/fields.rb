@@ -2,6 +2,9 @@ require 'hammer_cli'
 
 module Fields
 
+  class Memory < Field
+  end
+
   class Reference < Field
     def initialize(options={})
       super

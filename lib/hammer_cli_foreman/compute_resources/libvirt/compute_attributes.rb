@@ -11,12 +11,18 @@ module HammerCLIForeman
         def fields(dsl)
           dsl.build do
             field :cpus, _('CPUs')
-            field :memory, _('Memory')
+            field :memory, _('Memory'), Fields::Memory
+            # TODO: image
             collection :nics_attributes, _("Network interfaces") do
               field :type, _('Type')
               field :bridge, _('Bridge')
             end
-            # TODO: add all attributes
+            collection :volumes_attributes, _("Storage") do
+              field :pool_name, _('Storage pool')
+              field :capacity, _('Size'), Fields::Memory
+              field :allocation, _('Allocation'), Fields::Memory
+              field :format_type, _('Format')
+            end
           end
         end
       end

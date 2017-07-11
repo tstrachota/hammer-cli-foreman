@@ -94,6 +94,34 @@ module HammerCLIForeman::Output
       end
     end
 
+    class MemoryFormatter < HammerCLI::Output::Formatters::FieldFormatter
+      def initialize(options = {})
+        @default_unit = options[:default_unit] || 'GB'
+      end
+
+      def tags
+        [:human_readable]
+      end
+
+      UNITS = ['B', 'KB', 'MB', 'GB', 'TB']
+
+      # Accepts memory in bytes, returns memory in MB, GB
+      def format(data, field_params={})
+        data = data.to_i
+        if data == 0
+          "#{data} #{@default_unit}"
+        elsif (data % 1024) == 0
+          multiplier = 0
+          while ( data / (1024**multiplier) >= 1024 )
+            multiplier += 1
+          end
+          "#{data/(1024**multiplier)} #{UNITS[multiplier]}"
+        else
+          "#{data} B"
+        end
+      end
+    end
+
     HammerCLI::Output::Output.register_formatter(ReferenceFormatter.new, :SingleReference)
     HammerCLI::Output::Output.register_formatter(StructuredReferenceFormatter.new, :SingleReference)
 
@@ -101,6 +129,8 @@ module HammerCLIForeman::Output
     HammerCLI::Output::Output.register_formatter(StructuredReferenceFormatter.new, :Reference)
     HammerCLI::Output::Output.register_formatter(ReferenceFormatter.new, :Template)
     HammerCLI::Output::Output.register_formatter(StructuredReferenceFormatter.new, :Template)
+
+    HammerCLI::Output::Output.register_formatter(MemoryFormatter.new, :Memory)
   end
 end
 
