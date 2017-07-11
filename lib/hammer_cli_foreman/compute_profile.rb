@@ -40,15 +40,19 @@ module HammerCLIForeman
       end
 
       output ListCommand.output_definition do
-        # TODO: mozna pridat pro vyssi verbositu
-        # HammerCLIForeman::References.timestamps(self)
-
         collection :compute_attributes, _("Compute attributes") do
-          field Fields::SingleReference.new(:key => :compute_resource, :details => :provider_friendly_name)
+          adaptors [:json, :yaml, :csv] do
+            field nil, _('Compute resource'), Fields::SingleReference,
+              :key => :compute_resource,
+              :details => [
+                { :label => _('Type'), :key => :provider_friendly_name }
+              ]
+          end
+          adaptors [:base, :table] do
+            field nil, nil, Fields::SingleReference, :key => :compute_resource, :details => :provider_friendly_name
+          end
           field :id, _('Id'), Fields::Id
           field :name, _('Name')
-          # field :provider_friendly_name, _('Provider type')
-          # field :vm_attrs, _("VM attributes original")
 
           InfoCommand.vm_attrs_fields(self)
         end
