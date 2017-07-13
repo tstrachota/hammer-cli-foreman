@@ -37,7 +37,10 @@ module HammerCLIForeman
           @authenticator = VoidAuth.new
         else
           if settings.get(:foreman, :use_sessions)
-            @authenticator = InteractiveBasicAuth.new(nil, nil)
+            @authenticator = InteractiveBasicAuth.new(
+              settings.get(:_params, :username) || ENV['FOREMAN_USERNAME'],
+              settings.get(:_params, :password) || ENV['FOREMAN_PASSWORD']
+            )
             @authenticator = SessionAuthenticatorWrapper.new(@authenticator, uri)
           else
             @authenticator = InteractiveBasicAuth.new(

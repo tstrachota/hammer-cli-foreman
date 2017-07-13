@@ -17,16 +17,24 @@ module HammerCLIForeman
 
         # Make sure we reflect also credentials set for the main hammer command
         # ( hammer -u test auth login )
-        HammerCLI::Settings.load({
-          :_params => {
-            :username => option_username || HammerCLI::Settings.get('_params', 'username'),
-            :password => option_password || HammerCLI::Settings.get('_params', 'password')
-          }
-        })
 
-        HammerCLIForeman.foreman_api_connection.logout
-        context[:api_connection].drop_all
+        # HammerCLI::Settings.load({
+        #   :_params => {
+        #     :username => option_username || HammerCLI::Settings.get('_params', 'username'),
+        #     :password => option_password || HammerCLI::Settings.get('_params', 'password')
+        #   }
+        # })
 
+        # HammerCLIForeman.foreman_api_connection.logout
+        # context[:api_connection].drop_all
+
+
+
+        HammerCLIForeman.foreman_api_connection.authenticator.set_credentials(
+          option_username || HammerCLI::Settings.get('_params', 'username'),
+          option_password || HammerCLI::Settings.get('_params', 'password')
+        )
+        HammerCLIForeman.foreman_api_connection.authenticator.force_user_change
         HammerCLIForeman.foreman_api_connection.login
 
         print_message(_("Successfully logged in as '%s'.") % HammerCLIForeman.foreman_api_connection.authenticator.user)
@@ -41,6 +49,7 @@ module HammerCLIForeman
       def execute
         HammerCLIForeman.foreman_api_connection.logout
         context[:api_connection].drop_all
+        require 'pry'; binding.pry
         print_message(_("Logged out."))
         HammerCLI::EX_OK
       end

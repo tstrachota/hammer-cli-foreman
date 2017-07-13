@@ -3,6 +3,7 @@ require 'highline/import'
 module HammerCLIForeman
   module Api
     class InteractiveBasicAuth < ApipieBindings::Authenticators::BasicAuth
+
       def authenticate(request, args)
         if HammerCLI.interactive?
           get_user
@@ -25,6 +26,11 @@ module HammerCLIForeman
 
       def user
         @user
+      end
+
+      def set_credentials(user, password)
+        @user = user
+        @password = password
       end
 
       private

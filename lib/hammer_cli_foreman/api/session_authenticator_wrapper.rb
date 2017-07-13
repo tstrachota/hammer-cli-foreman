@@ -28,13 +28,19 @@ module HammerCLIForeman
         end
       end
 
+      def force_user_change
+        @user_changed = true
+      end
+
       def authenticate(request, args)
         load_session
 
         user = @authenticator.user
-        destroy_session if (user && user != @user)
+        # destroy_session if (user && user != @user)
 
-        if @permissions_ok && @session_id
+        @user_changed ||= (!user.nil? && user != @user)
+
+        if !@user_changed && @permissions_ok && @session_id
           jar = HTTP::CookieJar.new
           jar.add(HTTP::Cookie.new('_session_id', @session_id, domain: uri.hostname.downcase, path: '/', for_domain: true))
           request['Cookie'] = HTTP::Cookie.cookie_value(jar.cookies)
@@ -47,8 +53,12 @@ module HammerCLIForeman
       def error(ex)
         load_session
         if ex.is_a?(RestClient::Unauthorized) && !@session_id.nil?
-          destroy_session
-          return SessionExpired.new(_("Session has expired"))
+          if @user_changed
+            return UnauthorizedError.new(_("Invalid username or password, continuing with session for '%s'") % @user)
+          else
+            destroy_session
+            return SessionExpired.new(_("Session has expired"))
+          end
         else
           return @authenticator.error(ex)
         end
@@ -64,6 +74,10 @@ module HammerCLIForeman
 
       def user
         @authenticator.user if @authenticator.respond_to?(:user)
+      end
+
+      def set_credentials(*args)
+        @authenticator.set_credentials(*args) if @authenticator.respond_to?(:set_credentials)
       end
 
       protected
