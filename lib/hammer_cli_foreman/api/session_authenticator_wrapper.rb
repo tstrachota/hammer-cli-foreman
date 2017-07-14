@@ -18,6 +18,7 @@ module HammerCLIForeman
 
       def clear
         destroy_session
+        @authenticator.clear if @authenticator.respond_to?(:clear)
       end
 
       def status
@@ -36,7 +37,6 @@ module HammerCLIForeman
         load_session
 
         user = @authenticator.user
-        # destroy_session if (user && user != @user)
 
         @user_changed ||= (!user.nil? && user != @user)
 

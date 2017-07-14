@@ -28,8 +28,6 @@ module HammerCLIForeman
         # HammerCLIForeman.foreman_api_connection.logout
         # context[:api_connection].drop_all
 
-
-
         HammerCLIForeman.foreman_api_connection.authenticator.set_credentials(
           option_username || HammerCLI::Settings.get('_params', 'username'),
           option_password || HammerCLI::Settings.get('_params', 'password')
@@ -48,8 +46,6 @@ module HammerCLIForeman
 
       def execute
         HammerCLIForeman.foreman_api_connection.logout
-        context[:api_connection].drop_all
-        require 'pry'; binding.pry
         print_message(_("Logged out."))
         HammerCLI::EX_OK
       end

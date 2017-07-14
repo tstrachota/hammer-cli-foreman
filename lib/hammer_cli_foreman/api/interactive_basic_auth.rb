@@ -13,7 +13,10 @@ module HammerCLIForeman
       end
 
       def error(ex)
-        return UnauthorizedError.new(_("Invalid username or password")) if ex.is_a?(RestClient::Unauthorized)
+        if ex.is_a?(RestClient::Unauthorized)
+          self.clear
+          return UnauthorizedError.new(_("Invalid username or password"))
+        end
       end
 
       def status
@@ -31,6 +34,10 @@ module HammerCLIForeman
       def set_credentials(user, password)
         @user = user
         @password = password
+      end
+
+      def clear
+        set_credentials(nil, nil)
       end
 
       private
