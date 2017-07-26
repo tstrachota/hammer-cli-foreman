@@ -29,10 +29,10 @@ module HammerCLIForeman
 
         def fields(dsl)
           dsl.build do
-            field :flavor_id, _('Flavor')
+            field nil, _('Flavor'), Fields::SingleReference, :key => :flavor
             # Image
             field :availability_zone, _('Availability zone')
-            field :subnet_id, _('Subnet ID')
+            field nil, _('Subnet'), Fields::SingleReference, :key => :subnet
             # Security groups
             field :managed_ip, _('Managed IP')
           end
