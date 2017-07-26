@@ -1,4 +1,5 @@
 require 'hammer_cli_foreman/compute_resources/gce/host_help_extenstion'
+require 'hammer_cli_foreman/compute_resources/gce/compute_attributes'
 
 module HammerCLIForeman
   module ComputeResources

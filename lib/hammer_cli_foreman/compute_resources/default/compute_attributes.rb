@@ -12,7 +12,7 @@ module HammerCLIForeman
             collection :nics_attributes, _("Network interfaces"), :hide_blank => true do
               field :text_attributes, _('Attributes'), Fields::LongText
             end
-            collection :volumes_attributes, _("Volumes"), :hide_blank => true do
+            collection :volumes_attributes, _("Storage"), :hide_blank => true do
               field :text_attributes, _('Attributes'), Fields::LongText
             end
           end

@@ -11,6 +11,7 @@ module HammerCLIForeman
         'libvirt' => HammerCLIForeman::ComputeResources::Libvirt::ComputeAttributes.new,
         'ec2' => HammerCLIForeman::ComputeResources::EC2::ComputeAttributes.new,
         'openstack' => HammerCLIForeman::ComputeResources::Openstack::ComputeAttributes.new,
+        'google' => HammerCLIForeman::ComputeResources::GCE::ComputeAttributes.new,
         'default' => HammerCLIForeman::ComputeResources::Default::ComputeAttributes.new
       }
     end
