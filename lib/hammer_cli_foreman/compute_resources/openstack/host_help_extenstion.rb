@@ -1,6 +1,6 @@
 module HammerCLIForeman
   module ComputeResources
-    module OpenStack
+    module Openstack
       class HostHelpExtenstion
         def name
           _('OpenStack')

@@ -10,6 +10,7 @@ module HammerCLIForeman
       @provider_attributes ||= {
         'libvirt' => HammerCLIForeman::ComputeResources::Libvirt::ComputeAttributes.new,
         'ec2' => HammerCLIForeman::ComputeResources::EC2::ComputeAttributes.new,
+        'openstack' => HammerCLIForeman::ComputeResources::Openstack::ComputeAttributes.new,
         'default' => HammerCLIForeman::ComputeResources::Default::ComputeAttributes.new
       }
     end
