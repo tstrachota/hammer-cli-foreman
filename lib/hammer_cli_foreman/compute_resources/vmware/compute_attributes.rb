@@ -8,88 +8,54 @@ module HammerCLIForeman
           'vmware'
         end
 
-            #             "attributes" => {
-            #                       "cpus" => "1",
-            #                   "firmware" => "bios",
-            #                    "cluster" => "",
-            #                   "guest_id" => "otherGuest",
-            #                  "add_cdrom" => false,
-            #                 "annotation" => "",
-            #           "scsi_controllers" => {
-            #         "0" => {
-            #             "type" => "VirtualLsiLogicController",
-            #              "key" => 1000
-            #         },
-            #         "1" => {
-            #             "type" => "VirtualLsiLogicSASController",
-            #              "key" => 1001
-            #         }
-            #     },
-            #      "interfaces_attributes" => {
-            #         "0" => {
-            #                "type" => "VirtualE1000",
-            #             "network" => "dvportgroup-107686"
-            #         },
-            #         "1" => {
-            #                "type" => "VirtualVmxnet3",
-            #             "network" => "network-47067"
-            #         }
-            #     },
-            #         "volumes_attributes" => {
-            #         "0" => {
-            #                       "thin" => true,
-            #                       "name" => "Hard disk",
-            #                       "mode" => "independent_persistent",
-            #             "controller_key" => 1000,
-            #                       "size" => "10737418240",
-            #                    "size_gb" => 10,
-            #                "storage_pod" => "StorageCluster"
-            #         },
-            #         "1" => {
-            #                       "thin" => false,
-            #                       "name" => "Hard disk",
-            #                       "mode" => "independent_nonpersistent",
-            #             "controller_key" => 1001,
-            #                       "size" => "8589934592",
-            #                    "size_gb" => 8,
-            #                  "datastore" => "",
-            #                "storage_pod" => "StorageCluster",
-            #                 "eager_zero" => false,
-            #                  "eagerzero" => true
-            #         }
-            #     },
-            #           "cores_per_socket" => "1",
-            #                     "memory" => 786432,
-            #                "folder_path" => "/Datacenters/CFME/vm",
-            #                "folder_name" => "vm",
-            #                 "guest_name" => "Other Operating System (32-bit)",
-            #        "hardware_version_id" => "Default",
-            #      "hardware_version_name" => nil,
-            #     "memory_hot_add_enabled" => false,
-            #        "cpu_hot_add_enabled" => false
-            # }
-
-
-
         def fields(dsl)
           dsl.build do
             field :cpus, _('CPUs')
             field :cores_per_socket, _('Cores per socket')
             field :memory, _('Memory'), Fields::Memory
             field :firmware, _('Firmware')
-            field :cluster, _('Cluster') #TODO: nilify cluster
-            # TODO: resource pool
+            field nil, _('Cluster'), Fields::SingleReference, :key => :cluster
+            field nil, _('Resource pool'), Fields::SingleReference, :key => :resource_pool
             field nil, _('Folder'), Fields::SingleReference, :key => :folder, :id_key => 'folder_path'
             field nil, _('Guest OS'), Fields::SingleReference, :key => :guest
             field nil, _('Virtual H/W version'), Fields::SingleReference, :key => :hardware_version
 
+            field :memory_hot_add_enabled, _('Memory hot add'), Fields::Boolean
+            field :cpu_hot_add_enabled, _('CPU hot add'), Fields::Boolean
+            field :add_cdrom, _('CD-ROM drive'), Fields::Boolean
 
+            field :annotation, _('Annotation Notes')
+            field nil, _('Image'), Fields::SingleReference, :key => :image
 
+            collection :interfaces_attributes, _("Network interfaces") do
+              field nil, _('Type'), Fields::SingleReference, :key => :type
+              field nil, _('Network'), Fields::SingleReference, :key => :network
+            end
+
+            collection :scsi_controllers, _("Storage") do
+              field :type, _('SCSI controller')
+              collection :volumes, _("Volumes") do
+                field :name, _('Disk name')
+                field nil, _('Data store'), Fields::SingleReference, :key => :datastore
+                field :mode, _('Disk mode')
+                field :size, _('Size'), Fields::Memory
+                field :thin, _('Thin provision'), Fields::Boolean
+                field :eagerzero, _('Eager zero'), Fields::Boolean
+              end
+            end
           end
         end
 
         def transform_attributes(attrs)
           attrs = super(attrs)
+
+          # TODO unify nics_attributes and interfaces_attributes
+          attrs['interfaces_attributes'] = attrs['interfaces_attributes'].values if attrs.has_key?('interfaces_attributes')
+          attrs['scsi_controllers'] = attrs['scsi_controllers'].map do |key, ctrl|
+            ctrl['volumes'] = attrs['volumes_attributes'].find_all{|v| v['controller_key'] == ctrl['key']}
+            ctrl
+          end
+
           attrs["availability_zone"] ||= _('No preference') # TODO: shouldn't this be moved to default value formatter
           attrs["subnet_id"] ||= 'EC2' # TODO: shouldn't this be moved to default value formatter
           attrs

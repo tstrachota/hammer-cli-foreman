@@ -16,6 +16,7 @@ module HammerCLIForeman
             collection :nics_attributes, _("Network interfaces") do
               field :type, _('Type')
               field :bridge, _('Bridge')
+              # TODO: a co kdyz to neni bridge?
             end
             collection :volumes_attributes, _("Storage") do
               field :pool_name, _('Storage pool')
