@@ -1,4 +1,5 @@
 require 'hammer_cli_foreman/compute_resources/ovirt/host_help_extenstion'
+require 'hammer_cli_foreman/compute_resources/ovirt/compute_attributes'
 
 module HammerCLIForeman
   module ComputeResources

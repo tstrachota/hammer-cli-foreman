@@ -13,6 +13,8 @@ module HammerCLIForeman
         'openstack' => HammerCLIForeman::ComputeResources::Openstack::ComputeAttributes.new,
         'google' => HammerCLIForeman::ComputeResources::GCE::ComputeAttributes.new,
         'vmware' => HammerCLIForeman::ComputeResources::VMware::ComputeAttributes.new,
+        'rackspace' => HammerCLIForeman::ComputeResources::Rackspace::ComputeAttributes.new,
+        'ovirt' => HammerCLIForeman::ComputeResources::Ovirt::ComputeAttributes.new,
         'default' => HammerCLIForeman::ComputeResources::Default::ComputeAttributes.new
       }
     end

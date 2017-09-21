@@ -55,9 +55,6 @@ module HammerCLIForeman
             ctrl['volumes'] = attrs['volumes_attributes'].find_all{|v| v['controller_key'] == ctrl['key']}
             ctrl
           end
-
-          attrs["availability_zone"] ||= _('No preference') # TODO: shouldn't this be moved to default value formatter
-          attrs["subnet_id"] ||= 'EC2' # TODO: shouldn't this be moved to default value formatter
           attrs
         end
       end
