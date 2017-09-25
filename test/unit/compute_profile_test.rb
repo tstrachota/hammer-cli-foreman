@@ -5,11 +5,9 @@ require File.join(File.dirname(__FILE__), 'test_output_adapter')
 require 'hammer_cli_foreman/compute_profile'
 
 describe HammerCLIForeman::ComputeProfile do
-
   include CommandTestHelper
 
   context "ListCommand" do
-
     let(:cmd) { HammerCLIForeman::ComputeProfile::ListCommand.new("", ctx) }
 
     context "parameters" do
@@ -23,12 +21,10 @@ describe HammerCLIForeman::ComputeProfile do
       it_should_print_n_records
       it_should_print_columns ["Name", "Id"]
     end
-
   end
 
 
   context "InfoCommand" do
-
     let(:cmd) { HammerCLIForeman::ComputeProfile::InfoCommand.new("", ctx) }
 
     context "parameters" do
@@ -43,23 +39,19 @@ describe HammerCLIForeman::ComputeProfile do
         it_should_print_columns ["Name", "Id", "Compute attributes"]
       end
     end
-
   end
 
 
   context "CreateCommand" do
-
     let(:cmd) { HammerCLIForeman::ComputeProfile::CreateCommand.new("", ctx) }
 
     context "parameters" do
       it_should_accept "name", ["--name=arch"]
     end
-
   end
 
 
   context "DeleteCommand" do
-
     let(:cmd) { HammerCLIForeman::ComputeProfile::DeleteCommand.new("", ctx) }
 
     context "parameters" do
@@ -67,20 +59,15 @@ describe HammerCLIForeman::ComputeProfile do
       it_should_accept "id", ["--id=1"]
       # it_should_fail_with "name or id missing", [] # TODO: temporarily disabled, parameters are checked in the id resolver
     end
-
   end
 
 
   context "UpdateCommand" do
-
     let(:cmd) { HammerCLIForeman::ComputeProfile::UpdateCommand.new("", ctx) }
 
     context "parameters" do
       it_should_accept "name", ["--name=arch", "--new-name=arch2"]
       it_should_accept "id", ["--id=1", "--new-name=arch2"]
     end
-
   end
-
-
 end
