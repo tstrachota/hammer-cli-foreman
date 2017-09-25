@@ -8,40 +8,21 @@ module HammerCLIForeman
           'ec2'
         end
 
-            #                     "id" => 2,
-            #                   "name" => "m1.small - Small Instance",
-            #    "compute_resource_id" => 2,
-            #  "compute_resource_name" => "Ondruv EC2",
-            # "provider_friendly_name" => "EC2",
-            #     "compute_profile_id" => 1,
-            #   "compute_profile_name" => "1-Small",
-            #               "vm_attrs" => {
-            #              "flavor_id" => "m1.small",
-            #      "availability_zone" => "",
-            #              "subnet_id" => "",
-            #     "security_group_ids" => [
-            #         [0] ""
-            #     ],
-            #             "managed_ip" => "public"
-            # }
-
-
-
         def fields(dsl)
           dsl.build do
             field nil, _('Flavor'), Fields::SingleReference, :key => :flavor
-            # Image
+            field nil, _('Image'), Fields::SingleReference, :key => :image
             field :availability_zone, _('Availability zone')
             field nil, _('Subnet'), Fields::SingleReference, :key => :subnet
-            # Security groups
+            #TODO: Security groups
             field :managed_ip, _('Managed IP')
           end
         end
 
         def transform_attributes(attrs)
           attrs = super(attrs)
-          attrs["availability_zone"] ||= _('No preference') # TODO: shouldn't this be moved to default value formatter
-          attrs["subnet_id"] ||= 'EC2' # TODO: shouldn't this be moved to default value formatter
+          attrs["availability_zone"] ||= _('No preference')
+          attrs["subnet_id"] ||= 'EC2'
           attrs
         end
       end

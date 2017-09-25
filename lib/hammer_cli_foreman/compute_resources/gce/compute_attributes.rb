@@ -11,7 +11,7 @@ module HammerCLIForeman
         def fields(dsl)
           dsl.build do
             field :machine_type, _('Machine type')
-            # TODO: Image
+            field nil, _('Image'), Fields::SingleReference, :key => :image
             field :network, _('Network')
             field :external_ip, _('External IP'), Fields::Boolean
             collection :volumes_attributes, _("Storage") do

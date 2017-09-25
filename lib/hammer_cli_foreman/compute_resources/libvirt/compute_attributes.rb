@@ -12,14 +12,15 @@ module HammerCLIForeman
           dsl.build do
             field :cpus, _('CPUs')
             field :memory, _('Memory'), Fields::Memory
-            # TODO: image
-            collection :nics_attributes, _("Network interfaces") do
+            field nil, _('Image'), Fields::SingleReference, :key => :image
+            collection :interfaces_attributes, _("Network interfaces") do
               field :type, _('Type')
-              field :bridge, _('Bridge')
-              # TODO: a co kdyz to neni bridge?
+              field :bridge, _('Network'), Fields::Field, :hide_blank => true
+              field :network, _('Network'), Fields::Field, :hide_blank => true
+              field :model, _('Model')
             end
             collection :volumes_attributes, _("Storage") do
-              field :pool_name, _('Storage pool')
+              field :pool, _('Storage pool')
               field :capacity, _('Size'), Fields::Memory
               field :allocation, _('Allocation'), Fields::Memory
               field :format_type, _('Format')
