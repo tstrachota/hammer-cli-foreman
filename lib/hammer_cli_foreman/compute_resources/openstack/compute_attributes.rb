@@ -12,7 +12,7 @@ module HammerCLIForeman
           dsl.build do
             field nil, _('Flavor'), Fields::SingleReference, :key => :flavor
             field :availability_zone, _('Availability zone')
-            # TODO: Image
+            field nil, _('Image'), Fields::SingleReference, :key => :image
             field nil, _('Tenant'), Fields::SingleReference, :key => :tenant
             field nil, _('Security group'), Fields::SingleReference, :key => :security_group
 

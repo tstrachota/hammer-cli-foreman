@@ -14,7 +14,9 @@ module HammerCLIForeman
             field nil, _('Image'), Fields::SingleReference, :key => :image
             field :availability_zone, _('Availability zone')
             field nil, _('Subnet'), Fields::SingleReference, :key => :subnet
-            #TODO: Security groups
+            collection :security_groups, _("Security groups") do
+              field nil, nil, Fields::Reference
+            end
             field :managed_ip, _('Managed IP')
           end
         end
