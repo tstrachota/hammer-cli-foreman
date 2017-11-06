@@ -1,7 +1,9 @@
+require 'hammer_cli_foreman/compute_resources/compute_attributes_base'
+
 module HammerCLIForeman
   module ComputeResources
     module Default
-      class ComputeAttributes
+      class ComputeAttributes < ComputeAttributesBase
         def name
           'default'
         end

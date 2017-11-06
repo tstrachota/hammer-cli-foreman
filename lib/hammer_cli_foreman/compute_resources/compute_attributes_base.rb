@@ -8,7 +8,6 @@ module HammerCLIForeman
       end
 
       def transform_attributes(attrs)
-        attrs['nics_attributes'] = attrs['nics_attributes'].values if attrs.has_key?('nics_attributes')
         attrs['interfaces_attributes'] = attrs['interfaces_attributes'].values if attrs.has_key?('interfaces_attributes')
         attrs['volumes_attributes'] = attrs['volumes_attributes'].values if attrs.has_key?('volumes_attributes')
         attrs
