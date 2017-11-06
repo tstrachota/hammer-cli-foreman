@@ -40,7 +40,7 @@ module HammerCLIForeman
                 field :mode, _('Disk mode')
                 field :size, _('Size'), Fields::Memory
                 field :thin, _('Thin provision'), Fields::Boolean
-                field :eagerzero, _('Eager zero'), Fields::Boolean
+                field :eager_zero, _('Eager zero'), Fields::Boolean
               end
             end
           end

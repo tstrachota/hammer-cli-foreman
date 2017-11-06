@@ -16,7 +16,7 @@ module HammerCLIForeman
             field nil, _('Tenant'), Fields::SingleReference, :key => :tenant
             field nil, _('Security group'), Fields::SingleReference, :key => :security_group
 
-            collection :nics_attributes, _("Network interfaces") do
+            collection :interfaces_attributes, _("Network interfaces") do
               custom_field Fields::Reference
             end
             field :floating_ip_network, _('Floating IP network')
