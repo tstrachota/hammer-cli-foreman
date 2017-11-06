@@ -49,8 +49,6 @@ module HammerCLIForeman
         def transform_attributes(attrs)
           attrs = super(attrs)
 
-          # TODO unify nics_attributes and interfaces_attributes
-          #attrs['interfaces_attributes'] = attrs['interfaces_attributes'].values if attrs.has_key?('interfaces_attributes')
           attrs['scsi_controllers'] = attrs['scsi_controllers'].map do |key, ctrl|
             ctrl['volumes'] = attrs['volumes_attributes'].find_all{|v| v['controller_key'] == ctrl['key']}
             ctrl
