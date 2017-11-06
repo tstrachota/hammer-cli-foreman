@@ -9,7 +9,7 @@ module HammerCLIForeman
         def fields(dsl)
           dsl.build do
             field :text_attributes, _('Attributes'), Fields::LongText
-            collection :nics_attributes, _("Network interfaces"), :hide_blank => true do
+            collection :interfaces_attributes, _("Network interfaces"), :hide_blank => true do
               field :text_attributes, _('Attributes'), Fields::LongText
             end
             collection :volumes_attributes, _("Storage"), :hide_blank => true do
@@ -20,8 +20,8 @@ module HammerCLIForeman
 
         def transform_attributes(attrs)
           # By default the command will print all attributes formatted in yaml
-          attrs['text_attributes'] = to_text(attrs.reject{ |k| ['nics_attributes', 'volumes_attributes'].include? k })
-          attrs['nics_attributes'] = add_text_attributes(attrs['nics_attributes'])
+          attrs['text_attributes'] = to_text(attrs.reject{ |k| ['interfaces_attributes', 'volumes_attributes'].include? k })
+          attrs['interfaces_attributes'] = add_text_attributes(attrs['interfaces_attributes'])
           attrs['volumes_attributes'] = add_text_attributes(attrs['volumes_attributes'])
           attrs
         end

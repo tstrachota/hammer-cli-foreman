@@ -1,0 +1,30 @@
+{
+  "id": 3,
+  "name": "m1.tiny",
+  "compute_resource_id": 3,
+  "compute_resource_name": "Try OpenStack",
+  "provider_friendly_name": "OpenStack",
+  "compute_profile_id": 1,
+  "compute_profile_name": "1-Small",
+  "attributes": {
+    "availability_zone": null,
+    "tenant_id": "48b0818432a443a7b320c2f1467d33da",
+    "boot_from_volume": true,
+    "scheduler_hint_filter": null,
+    "flavor_id": "1",
+    "flavor_name": "m1.tiny",
+    "tenant_name": "test_tenant",
+    "security_group_name": "default",
+    "security_group_id": "649338b7-6e5c-47d5-b574-af5855b19e47",
+    "floating_ip_network": "public",
+    "boot_volume_size": "12884901888",
+    "interfaces_attributes": {
+      "0": {
+        "id": "1fd0a21e-e700-46ae-9f05-0b3164daafcc",
+        "name": "public"
+      }
+    },
+    "image_id": "c556a505-9552-4f24-96e5-40dbca943211",
+    "image_name": "Test image"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": 17,
+  "name": "t2.micro - Micro Instance",
+  "compute_resource_id": 9,
+  "compute_resource_name": "EC2",
+  "provider_friendly_name": "EC2",
+  "compute_profile_id": 1,
+  "compute_profile_name": "1-Small",
+  "attributes": {
+    "flavor_id": "t2.micro",
+    "image_id": "ami-b63769a1",
+    "availability_zone": "us-east-1b",
+    "managed_ip": "private",
+    "flavor_name": "Micro Instance",
+    "subnet_name": null,
+    "image_name": "RHEL73",
+    "security_groups": {
+      "0": {
+        "id": "sg-379ac25f",
+        "name": "default"
+      }
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "id": 12,
+  "name": "2 CPUs and 768 MB memory",
+  "compute_resource_id": 6,
+  "compute_resource_name": "vmWare",
+  "provider_friendly_name": "VMware",
+  "compute_profile_id": 1,
+  "compute_profile_name": "1-Small",
+  "attributes": {
+    "cpus": "2",
+    "firmware": "bios",
+    "guest_id": "otherGuest64",
+    "add_cdrom": false,
+    "annotation": "",
+    "scsi_controllers": {
+      "0": {
+        "type": "VirtualLsiLogicController",
+        "key": 1000,
+        "eager_zero": null
+      },
+      "1": {
+        "type": "VirtualLsiLogicController",
+        "key": 1001,
+        "eager_zero": null
+      }
+    },
+    "interfaces_attributes": {
+      "0": {
+        "type_id": "VirtualE1000",
+        "type_name": "E1000",
+        "network_id": "dvportgroup-125",
+        "network_name": "EngRef_Network"
+      },
+      "1": {
+        "type_id": "VirtualVmxnet3",
+        "type_name": "VMXNET 3",
+        "network_id": "dvportgroup-26",
+        "network_name": "Private_Networks-DVUplinks-25"
+      }
+    },
+    "volumes_attributes": {
+      "0": {
+        "thin": true,
+        "name": "Hard disk",
+        "mode": "persistent",
+        "controller_key": 1000,
+        "size": "10737418240",
+        "datastore_name": "Local-Jericho",
+        "datastore_id": "datastore-48"
+      },
+      "1": {
+        "thin": false,
+        "name": "Hard disk",
+        "mode": "persistent",
+        "controller_key": 1000,
+        "size": "10737418240",
+        "storage_pod": "",
+        "eager_zero": false,
+        "eagerzero": true,
+        "datastore_name": "Local-Bulgaria",
+        "datastore_id": "datastore-65"
+      },
+      "2": {
+        "storage_pod": "",
+        "thin": false,
+        "eager_zero": false,
+        "name": "Hard disk",
+        "mode": "persistent",
+        "controller_key": 1001,
+        "size": "10737418240",
+        "datastore_name": null,
+        "datastore_id": null
+      }
+    },
+    "cores_per_socket": "1",
+    "memory": 786432,
+    "folder_path": "/Datacenters/Engineering/Test",
+    "folder_name": "Test",
+    "cluster_id": "domain-c7",
+    "cluster_name": "Foreman_Engineering",
+    "resource_pool_id": "resgroup-8",
+    "resource_pool_name": "Resources",
+    "guest_name": "Other Operating System (64-bit)",
+    "hardware_version_id": "vmx-09",
+    "hardware_version_name": "9 (ESXi 5.1)",
+    "memory_hot_add_enabled": true,
+    "cpu_hot_add_enabled": true,
+    "image_name": null
+  }
+}

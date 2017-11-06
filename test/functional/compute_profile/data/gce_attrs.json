@@ -1,0 +1,26 @@
+{
+  "id": 10,
+  "name": "f1-micro",
+  "compute_resource_id": 5,
+  "compute_resource_name": "GCE",
+  "provider_friendly_name": "Google",
+  "compute_profile_id": 1,
+  "compute_profile_name": "1-Small",
+  "attributes": {
+    "machine_type": "f1-micro",
+    "network": "default",
+    "external_ip": true,
+    "volumes_attributes": {
+      "0": {
+        "size": "10737418240"
+      },
+      "1": {
+        "size": "16106127360"
+      },
+      "2": {
+        "size": "5368709120"
+      }
+    },
+    "image_name": null
+  }
+}

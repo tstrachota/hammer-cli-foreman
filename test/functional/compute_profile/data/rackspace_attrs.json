@@ -1,0 +1,14 @@
+{
+  "id": 15,
+  "name": "512MB Standard Instance",
+  "compute_resource_id": 7,
+  "compute_resource_name": "Fake Rackspace",
+  "provider_friendly_name": "Rackspace",
+  "compute_profile_id": 3,
+  "compute_profile_name": "3-Large",
+  "attributes": {
+    "flavor_id": "3",
+    "flavor_name": "512MB Standard Instance",
+    "image_name": null
+  }
+}
