@@ -34,9 +34,11 @@ module HammerCLIForeman
     class InfoCommand < HammerCLIForeman::InfoCommand
       def self.vm_attrs_fields(dsl)
         dsl.build do
-          HammerCLIForeman::ComputeProfile.provider_attributes.each do |k,t|
-            label _("VM attributes"), :path => ["#{t.name}_vm_attrs".to_sym], :hide_blank => true do
-              t.fields(self)
+          adaptors [:json, :yaml, :base] do
+            HammerCLIForeman::ComputeProfile.provider_attributes.each do |k,t|
+              label _("VM attributes"), :path => ["#{t.name}_vm_attrs".to_sym], :hide_blank => true do
+                t.fields(self)
+              end
             end
           end
         end

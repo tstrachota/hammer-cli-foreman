@@ -30,56 +30,6 @@ describe 'compute-attributes info' do
     assert_cmd(expected_result, run_cmd(cmd))
   end
 
-  it 'formats attributes for libvirt' do
-    api_expects_profile_show(:libvirt)
-
-    output = OutputMatcher.new([
-      "Id:                 1",
-      "Name:               1-Small",
-      "Compute attributes: ",
-      " 1) tstracho-laptop (Libvirt)",
-      "    Name:          1 CPUs and 1 GB memory",
-      "    VM attributes: ",
-      "        CPUs:               1",
-      "        Memory:             1 GB",
-      "        Network interfaces: ",
-      "         1) Type:    bridge",
-      "            Network: br0",
-      "            Model:   virtio",
-      "         2) Type:    network",
-      "            Network: default",
-      "            Model:   virtio",
-      "        Storage:            ",
-      "         1) Storage pool: default",
-      "            Size:         10 GB",
-      "            Allocation:   0 GB",
-      "            Format:       qcow2"
-    ])
-
-    expected_result = success_result(output)
-    assert_cmd(expected_result, run_cmd(cmd))
-  end
-
-  it 'formats attributes for ec2' do
-    api_expects_profile_show(:ec2)
-
-    output = OutputMatcher.new([
-      "Compute attributes: ",
-      " 1) EC2 (EC2)",
-      "    Name:          t2.micro - Micro Instance",
-      "    VM attributes:",
-      "        Flavor:            Micro Instance",
-      "        Image:             RHEL73",
-      "        Availability zone: us-east-1b",
-      "        Security groups:",
-      "         1)",
-      "        Managed IP:        private"
-    ])
-
-    expected_result = success_result(output)
-    assert_cmd(expected_result, run_cmd(cmd))
-  end
-
   it 'formats attributes for vmware' do
     api_expects_profile_show(:vmware)
 
@@ -187,6 +137,255 @@ describe 'compute-attributes info' do
 
     expected_result = success_result(output)
     assert_cmd(expected_result, run_cmd(cmd, :show_ids => true))
+  end
+
+  it 'formats attributes for vmware in yaml' do
+    api_expects_profile_show(:vmware)
+
+    output = OutputMatcher.new([
+      "---",
+      "Id: 1",
+      "Name: 1-Small",
+      "Compute attributes:",
+      "- Compute resource:",
+      "    Name: vmWare",
+      "    Id: 6",
+      "    Type: VMware",
+      "  Name: 2 CPUs and 768 MB memory",
+      "  VM attributes:",
+      "    CPUs: '2'",
+      "    Cores per socket: '1'",
+      "    Memory: 786432",
+      "    Firmware: bios",
+      "    Cluster:",
+      "      Name: Foreman_Engineering",
+      "      Id: domain-c7",
+      "    Resource pool:",
+      "      Name: Resources",
+      "      Id: resgroup-8",
+      "    Folder:",
+      "      Name: Test",
+      "      Id: \"/Datacenters/Engineering/Test\"",
+      "    Guest OS:",
+      "      Name: Other Operating System (64-bit)",
+      "      Id: otherGuest64",
+      "    Virtual H/W version:",
+      "      Name: 9 (ESXi 5.1)",
+      "      Id: vmx-09",
+      "    Memory hot add: false",
+      "    CPU hot add: false",
+      "    CD-ROM drive: true",
+      "    Annotation Notes: ''",
+      "    Network interfaces:",
+      "    - Type:",
+      "        Name: E1000",
+      "        Id: VirtualE1000",
+      "      Network:",
+      "        Name: EngRef_Network",
+      "        Id: dvportgroup-125",
+      "    - Type:",
+      "        Name: VMXNET 3",
+      "        Id: VirtualVmxnet3",
+      "      Network:",
+      "        Name: Private_Networks-DVUplinks-25",
+      "        Id: dvportgroup-26",
+      "    Storage:",
+      "    - SCSI controller: VirtualLsiLogicController",
+      "      Volumes:",
+      "      - Disk name: Hard disk",
+      "        Data store:",
+      "          Name: Local-Jericho",
+      "          Id: datastore-48",
+      "        Disk mode: persistent",
+      "        Size: '10737418240'",
+      "        Thin provision: false",
+      "        Eager zero: true",
+      "      - Disk name: Hard disk",
+      "        Data store:",
+      "          Name: Local-Bulgaria",
+      "          Id: datastore-65",
+      "        Disk mode: persistent",
+      "        Size: '10737418240'",
+      "        Thin provision: true",
+      "        Eager zero: true",
+      "    - SCSI controller: VirtualLsiLogicController",
+      "      Volumes:",
+      "      - Disk name: Hard disk",
+      "        Disk mode: persistent",
+      "        Size: '10737418240'",
+      "        Thin provision: true",
+      "        Eager zero: true"
+    ])
+
+    expected_result = success_result(output)
+    assert_cmd(expected_result, run_cmd(cmd, :adapter => :yaml))
+  end
+
+  it 'formats attributes for vmware in json' do
+    api_expects_profile_show(:vmware)
+
+    output = OutputMatcher.new([
+      '{',
+      '  "Id": 1,',
+      '  "Name": "1-Small",',
+      '  "Compute attributes": [',
+      '    {',
+      '      "Compute resource": {',
+      '        "Name": "vmWare",',
+      '        "Id": 6,',
+      '        "Type": "VMware"',
+      '      },',
+      '      "Name": "2 CPUs and 768 MB memory",',
+      '      "VM attributes": {',
+      '        "CPUs": "2",',
+      '        "Cores per socket": "1",',
+      '        "Memory": 786432,',
+      '        "Firmware": "bios",',
+      '        "Cluster": {',
+      '          "Name": "Foreman_Engineering",',
+      '          "Id": "domain-c7"',
+      '        },',
+      '        "Resource pool": {',
+      '          "Name": "Resources",',
+      '          "Id": "resgroup-8"',
+      '        },',
+      '        "Folder": {',
+      '          "Name": "Test",',
+      '          "Id": "/Datacenters/Engineering/Test"',
+      '        },',
+      '        "Guest OS": {',
+      '          "Name": "Other Operating System (64-bit)",',
+      '          "Id": "otherGuest64"',
+      '        },',
+      '        "Virtual H/W version": {',
+      '          "Name": "9 (ESXi 5.1)",',
+      '          "Id": "vmx-09"',
+      '        },',
+      '        "Memory hot add": false,',
+      '        "CPU hot add": false,',
+      '        "CD-ROM drive": true,',
+      '        "Annotation Notes": "",',
+      '        "Network interfaces": [',
+      '          {',
+      '            "Type": {',
+      '              "Name": "E1000",',
+      '              "Id": "VirtualE1000"',
+      '            },',
+      '            "Network": {',
+      '              "Name": "EngRef_Network",',
+      '              "Id": "dvportgroup-125"',
+      '            }',
+      '          },',
+      '          {',
+      '            "Type": {',
+      '              "Name": "VMXNET 3",',
+      '              "Id": "VirtualVmxnet3"',
+      '            },',
+      '            "Network": {',
+      '              "Name": "Private_Networks-DVUplinks-25",',
+      '              "Id": "dvportgroup-26"',
+      '            }',
+      '          }',
+      '        ],',
+      '        "Storage": [',
+      '          {',
+      '            "SCSI controller": "VirtualLsiLogicController",',
+      '            "Volumes": [',
+      '              {',
+      '                "Disk name": "Hard disk",',
+      '                "Data store": {',
+      '                  "Name": "Local-Jericho",',
+      '                  "Id": "datastore-48"',
+      '                },',
+      '                "Disk mode": "persistent",',
+      '                "Size": "10737418240",',
+      '                "Thin provision": false,',
+      '                "Eager zero": true',
+      '              },',
+      '              {',
+      '                "Disk name": "Hard disk",',
+      '                "Data store": {',
+      '                  "Name": "Local-Bulgaria",',
+      '                  "Id": "datastore-65"',
+      '                },',
+      '                "Disk mode": "persistent",',
+      '                "Size": "10737418240",',
+      '                "Thin provision": true,',
+      '                "Eager zero": true',
+      '              }',
+      '            ]',
+      '          },',
+      '          {',
+      '            "SCSI controller": "VirtualLsiLogicController",',
+      '            "Volumes": [',
+      '              {',
+      '                "Disk name": "Hard disk",',
+      '                "Disk mode": "persistent",',
+      '                "Size": "10737418240",',
+      '                "Thin provision": true,',
+      '                "Eager zero": true',
+      '              }',
+      '            ]',
+      '          }',
+      '        ]',
+      '      }',
+      '    }',
+      '  ]',
+      '}'
+    ])
+
+    expected_result = success_result(output)
+    assert_cmd(expected_result, run_cmd(cmd, :adapter => :json))
+  end
+
+  it 'formats attributes for libvirt' do
+    api_expects_profile_show(:libvirt)
+
+    output = OutputMatcher.new([
+      "Id:                 1",
+      "Name:               1-Small",
+      "Compute attributes: ",
+      " 1) tstracho-laptop (Libvirt)",
+      "    Name:          1 CPUs and 1 GB memory",
+      "    VM attributes: ",
+      "        CPUs:               1",
+      "        Memory:             1 GB",
+      "        Network interfaces: ",
+      "         1) Type:    bridge",
+      "            Network: br0",
+      "            Model:   virtio",
+      "         2) Type:    network",
+      "            Network: default",
+      "            Model:   virtio",
+      "        Storage:            ",
+      "         1) Storage pool: default",
+      "            Size:         10 GB",
+      "            Allocation:   0 GB",
+      "            Format:       qcow2"
+    ])
+
+    expected_result = success_result(output)
+    assert_cmd(expected_result, run_cmd(cmd))
+  end
+
+  it 'formats attributes for ec2' do
+    api_expects_profile_show(:ec2)
+
+    output = OutputMatcher.new([
+      "Compute attributes: ",
+      " 1) EC2 (EC2)",
+      "    Name:          t2.micro - Micro Instance",
+      "    VM attributes:",
+      "        Flavor:            Micro Instance",
+      "        Image:             RHEL73",
+      "        Availability zone: us-east-1b",
+      "        Security groups:",
+      "         1)",
+      "        Managed IP:        private"
+    ])
+
+    expected_result = success_result(output)
+    assert_cmd(expected_result, run_cmd(cmd))
   end
 
   it 'formats attributes for gce' do
