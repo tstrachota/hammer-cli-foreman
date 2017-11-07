@@ -16,7 +16,6 @@ module HammerCLIForeman
             field :memory, _('Memory'), Fields::Memory
             collection :interfaces_attributes, _("Network interfaces") do
               field :name, _('Name')
-              # TODO: network
             end
             collection :volumes_attributes, _("Storage") do
               field :size, _('Size'), Fields::Memory

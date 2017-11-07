@@ -23,7 +23,6 @@ module HammerCLIForeman
 
         def transform_attributes(attrs)
           attrs = super(attrs)
-          attrs["availability_zone"] ||= _('No preference')
           attrs["subnet_id"] ||= 'EC2'
           attrs
         end

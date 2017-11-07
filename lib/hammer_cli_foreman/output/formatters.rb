@@ -57,6 +57,7 @@ module HammerCLIForeman::Output
 
       # Parameters:
       # :display_field_key - key where the formmatter will look for the main field to display, default is :name
+      # :display_field_label - label for the main field, default is "Name"
       # :details - detail fields to be displayed
       #  example format:
       #  :details => [
@@ -68,9 +69,9 @@ module HammerCLIForeman::Output
 
         display_field_key = field_params[:display_field_key] || :name
 
-        # TODO: hardcoded name
+        name = field_params[:display_field_label] || _('Name')
         formatted = {
-          'Name' => get_value(data, display_field_key)
+          name => get_value(data, display_field_key)
         }
 
         details = field_params[:details]
