@@ -12,6 +12,7 @@
     "availability_zone": "us-east-1b",
     "managed_ip": "private",
     "flavor_name": "Micro Instance",
+    "subnet_id": null,
     "subnet_name": null,
     "image_name": "RHEL73",
     "security_groups": {
